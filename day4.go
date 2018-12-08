@@ -24,7 +24,7 @@ type SleepWake struct {
 }
 
 func Main4() {
-	data := SortStrings(strings.Split(data, "\n"))
+	data := SortStrings(strings.Split(Day4Data, "\n"))
 	fmt.Println(data)
 	var shifts []GuardShift
 	prevShift := GuardShift{}
@@ -178,7 +178,7 @@ func SortStrings(s []string) []string {
 	return s
 }
 
-const data = `[1518-09-22 23:50] Guard #2309 begins shift
+const Day4Data = `[1518-09-22 23:50] Guard #2309 begins shift
 [1518-06-26 00:42] falls asleep
 [1518-07-10 00:00] Guard #761 begins shift
 [1518-10-09 00:43] wakes up
