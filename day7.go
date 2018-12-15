@@ -28,7 +28,7 @@ func Main7() {
 		graph[to] = Node{Name:to, From: append(graph[to].From, from), To: graph[to].To, Steps: 60 + int(rune(to[0])) - 64}
 		graph[from] = Node{Name:from, From: graph[from].From, To: append(graph[from].To, to), Steps: 60 + int(rune(from[0])) - 64}
 	}
-	fmt.Println(MultipleWorkers(graph, 5))
+	fmt.Println(MultipleWorkers(graph, 5) - 1)
 }
 
 func MultipleWorkers(graph map[string]Node, numWorker int) int {
@@ -36,6 +36,11 @@ func MultipleWorkers(graph map[string]Node, numWorker int) int {
 	workers := make([]Worker, numWorker)
 	for len(graph) > 0 || IsSomeoneWorking(workers) {
 		for id := range workers {
+			if workers[id].StepsLeft == 0 && workers[id].Assigned != "" {
+				fmt.Println(workers)
+				graph = RemoveFrom(graph, workers[id].Assigned, workers[id].Node.To)
+				workers[id] = Worker{}
+			}
 			if workers[id].StepsLeft == 0 {
 				taskNode, temp_G := GetTaskAndRemove(graph)
 				if taskNode.Name != "" {
@@ -48,11 +53,6 @@ func MultipleWorkers(graph map[string]Node, numWorker int) int {
 			}
 			if !(workers[id].StepsLeft == 0) {
 				workers[id].StepsLeft -= 1
-			}
-			if workers[id].StepsLeft == 0 && workers[id].Assigned != "" {
-				fmt.Println(workers)
-				graph = RemoveFrom(graph, workers[id].Assigned, workers[id].Node.To)
-				workers[id] = Worker{}
 			}
 		}
 		steps += 1
