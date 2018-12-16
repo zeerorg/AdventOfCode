@@ -3,5 +3,5 @@ package main
 import "gitlab.com/zeerorg/AdventOfCode"
 
 func main() {
-	AdventOfCode.Main7()
+	AdventOfCode.Main8()
 }
